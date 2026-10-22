@@ -14,16 +14,15 @@
 <h1 align="center">Laboratorio de Laravel: Introducción al Framework MVC</h1>
 
 <p align="center">
-  <strong>Autor: Vasdti Legaspi</strong>
+  <strong>Autora: Vasdti Legaspi</strong><br>
+  <strong>Fecha: viernes, 23 de octubre de 2026</strong>
 </p>
 
 ## Introducción
 
-Este repositorio documenta el desarrollo del laboratorio de introducción al framework Laravel, siguiendo la guía proporcionada en la asignatura de Desarrollo Web de la Universidad Tecnológica de Panamá.
+En este README voy a contar cómo fui haciendo el laboratorio de Laravel, siguiendo la guía de la asignatura de Desarrollo Web de la Universidad Tecnológica de Panamá. La idea es explicar el proceso como lo hice yo, paso por paso, con los comandos que fui utilizando y lo que debía revisar en cada momento.
 
-Durante esta práctica se trabajó con la preparación del entorno de desarrollo, la creación de un proyecto Laravel, la configuración de la conexión con MySQL, la ejecución de migraciones, la ejecución de la aplicación y la generación de vistas de autenticación mediante Bootstrap.
-
-Las imágenes se presentan en el mismo orden del documento de evidencias. Cada captura incluye una explicación del procedimiento o resultado que representa.
+Durante el laboratorio preparé el entorno de trabajo, creé el proyecto, revisé la conexión con MySQL, ejecuté las migraciones e inicié la aplicación. Después trabajé con Laravel UI y Bootstrap para generar las vistas de autenticación. Fui colocando las capturas en el mismo orden en que aparecen en las evidencias para que sea más fácil seguir el procedimiento.
 
 ## Objetivos
 
@@ -48,153 +47,262 @@ Las imágenes se presentan en el mismo orden del documento de evidencias. Cada c
 - **Bootstrap:** framework utilizado para los estilos de las vistas.
 - **GitHub:** plataforma utilizada para documentar y compartir el laboratorio.
 
-## Desarrollo del laboratorio
+## Desarrollo del laboratorio paso a paso
 
-### Imagen 1. Preparación del proyecto Laravel
+Bueno, vamos con el laboratorio paso a paso. Voy a ir contando qué hice, qué escribí en la terminal y qué revisé para poder continuar. Las capturas están guardadas en la carpeta `Imagenes` y las puse en el mismo orden del procedimiento.
 
-![Imagen 1](Imagenes/Img1.png)
+### Paso 1. Abrir la terminal y ubicarse en la carpeta de WampServer
 
-En esta primera evidencia se muestra el inicio del proceso de trabajo con Laravel. Se prepara el entorno y se realizan las acciones iniciales necesarias para comenzar el laboratorio.
+![Paso 1: abrir la terminal y ubicarse en la carpeta](Imagenes/Img1.png)
 
-### Imagen 2. Ejecución de comandos en la terminal
+Primero abrí CMD o PowerShell. Para empezar, escribí este comando para ubicarme en la raíz de la unidad:
 
-![Imagen 2](Imagenes/Img2.png)
+```bat
+cd \
+```
 
-En esta captura se observa el uso de la terminal para ejecutar comandos relacionados con el proyecto. La terminal permite administrar dependencias, ejecutar instrucciones de Artisan y realizar configuraciones necesarias durante el desarrollo.
+Después me fui a la carpeta donde WampServer guarda los proyectos:
 
-### Imagen 3. Comprobación de WampServer
+```bat
+cd C:\wamp64\www
+```
 
-![Imagen 3](Imagenes/Img3.png)
+Así quedé dentro de `C:\wamp64\www`, que es la carpeta donde iba a guardar el proyecto.
 
-En esta imagen se muestra WampServer, utilizado como entorno local para el desarrollo. Se comprueba el entorno que permite ejecutar aplicaciones PHP y trabajar con MySQL.
+Ya ubicada en esa carpeta, creé el proyecto con este comando:
 
-### Imagen 4. Administración de la base de datos
+```bat
+laravel new Lab_Laravel
+```
 
-![Imagen 4](Imagenes/Img4.png)
+En mi caso le puse `Lab_Laravel` para identificar el laboratorio más rápido y tener claro cuál era la carpeta del proyecto.
 
-Esta evidencia corresponde al trabajo con la base de datos mediante phpMyAdmin. Esta herramienta permite visualizar las bases de datos, consultar las tablas existentes y comprobar la estructura generada durante el desarrollo.
+Cuando se abrió el asistente de Laravel, me preguntó si quería utilizar un *starter kit*. En esa parte escribí `no`, porque quería continuar sin agregar uno. Después me preguntó qué frontend quería utilizar y seleccioné `blade`, que era la opción que iba a utilizar en esta práctica. Luego esperé a que terminara de crear el proyecto.
 
-### Imagen 5. Configuración y ejecución de migraciones
+> Puede que las preguntas cambien un poco según la versión de Laravel que tengas instalada, así que fíjate en las opciones que te aparezcan en la terminal.
 
-![Imagen 5](Imagenes/Img5.png)
+### Paso 2. Actualizar las dependencias del proyecto
 
-En esta etapa se trabaja con los comandos de Artisan relacionados con la configuración del proyecto y la base de datos.
+![Paso 2: actualizar dependencias](Imagenes/Img2.png)
 
-```bash
+Cuando terminó de crearse el proyecto, entré en la carpeta que acababa de crear:
+
+```bat
+cd Lab_Laravel
+```
+
+Ya dentro de `Lab_Laravel`, ejecuté el siguiente comando:
+
+```bat
+composer update
+```
+
+Con esto Composer revisa y actualiza las dependencias de PHP del proyecto. Esperé a que terminara y revisé que no apareciera ningún error que impidiera continuar.
+
+### Paso 3. Comprobar que WampServer esté funcionando
+
+![Paso 3: comprobar WampServer](Imagenes/Img3.png)
+
+Después abrí WampServer para comprobar que estuviera funcionando. Luego abrí el navegador y escribí esta dirección:
+
+```text
+http://localhost
+```
+
+Al entrar, debía aparecer la página de WampServer. Hice esta comprobación para asegurarme de que el entorno local estuviera respondiendo antes de seguir con Laravel. También necesitaba que MySQL estuviera funcionando para poder trabajar con la base de datos.
+
+### Paso 4. Revisar la configuración de la base de datos
+
+![Paso 4: revisar la base de datos](Imagenes/Img4.png)
+
+Luego abrí phpMyAdmin desde WampServer para revisar la base de datos. Después abrí el archivo `.env`, que está en la carpeta principal de `Lab_Laravel`, y revisé los datos de conexión. Los valores que utilicé como referencia fueron:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Estos datos tienen que coincidir con la configuración de MySQL de tu equipo. En mi evidencia aparece la base de datos `laravel`; si todavía no existe en tu phpMyAdmin, hay que crearla o cambiar `DB_DATABASE` por el nombre de la base de datos que estés utilizando.
+
+### Paso 5. Limpiar la caché de configuración y ejecutar las migraciones
+
+![Paso 5: configurar Laravel y ejecutar migraciones](Imagenes/Img5.png)
+
+Después volví a la terminal, asegurándome de estar dentro de `Lab_Laravel`, y ejecuté los comandos uno por uno. Primero escribí:
+
+```bat
 php artisan config:clear
+```
+
+Con esto limpié la caché de configuración para que Laravel leyera los valores actuales del archivo `.env`.
+
+Después escribí:
+
+```bat
 php artisan config:cache
+```
+
+Este comando vuelve a guardar la configuración en caché.
+
+Por último, ejecuté las migraciones:
+
+```bat
 php artisan migrate
 ```
 
-El comando `config:clear` elimina la caché de configuración, `config:cache` vuelve a generarla y `migrate` ejecuta las migraciones pendientes definidas en `database/migrations`.
+Laravel revisa los archivos de `database/migrations` y crea las tablas que todavía no estén creadas. En la terminal pueden aparecer nombres como `users`, `cache` y `jobs`. Si te aparece un error, revisa el mensaje antes de continuar, sobre todo la conexión a MySQL y el nombre de la base de datos.
 
-### Imagen 6. Inicio del servidor de Laravel
+### Paso 6. Iniciar el servidor de Laravel
 
-![Imagen 6](Imagenes/Img6.png)
+![Paso 6: iniciar el servidor](Imagenes/Img6.png)
 
-En esta captura se muestra el proceso de inicio del servidor de desarrollo de Laravel. El comando utilizado para iniciar el servidor es:
+Con la terminal todavía ubicada en la carpeta del proyecto, escribí:
 
-```bash
+```bat
 php artisan serve
 ```
 
-Cuando se inicia correctamente, la terminal muestra la dirección local desde la cual se puede acceder a la aplicación mediante el navegador.
+Este comando inicia el servidor de desarrollo de Laravel. Cuando se ejecutó correctamente, la terminal me mostró una dirección parecida a esta:
 
-### Imagen 7. Visualización de Laravel en el navegador
+```text
+http://127.0.0.1:8000
+```
 
-![Imagen 7](Imagenes/Img7.png)
+Dejé esa terminal abierta porque, si la cierro, el servidor deja de ejecutarse. Después abrí en el navegador la dirección que me apareció.
 
-En esta imagen se observa la aplicación Laravel abierta en el navegador. Esta comprobación permite verificar visualmente el funcionamiento de la aplicación en el entorno local.
+### Paso 7. Abrir la aplicación en el navegador
 
-### Imagen 8. Identificación de un error en la aplicación
+![Paso 7: abrir Laravel en el navegador](Imagenes/Img7.png)
 
-![Imagen 8](Imagenes/Img8.png)
+Con el servidor encendido, abrí en el navegador la dirección que apareció en la terminal. En mi caso, normalmente sería:
 
-En esta evidencia se muestra un mensaje de error relacionado con una operación de base de datos. Este tipo de situación destaca la importancia de revisar la configuración de conexión definida en `.env` y comprobar que el servicio MySQL se encuentre activo. La captura documenta un problema encontrado durante el laboratorio.
+```text
+http://127.0.0.1:8000
+```
 
-### Imagen 9. Comprobación de la aplicación Laravel
+Aquí revisé que la página de Laravel cargara. Si en vez de eso aparece un error, como me pasó durante la práctica, toca revisar qué está indicando antes de seguir con los siguientes pasos.
 
-![Imagen 9](Imagenes/Img9.png)
+### Paso 8. Reconocer y resolver el error de tabla inexistente
 
-En esta captura se muestra la aplicación en el navegador. Esta evidencia permite observar el resultado visual del proyecto durante las comprobaciones realizadas en el entorno de desarrollo.
+![Paso 8: error de tabla inexistente](Imagenes/Img8.png)
 
-### Imagen 10. Instalación de dependencias
+En esta parte me apareció un error de MySQL que decía que no existía la tabla `sessions` dentro de la base de datos `laravel`. Esto puede pasar cuando Laravel está configurado para guardar las sesiones en la base de datos, pero todavía no se ha creado la tabla que necesita.
 
-![Imagen 10](Imagenes/Img10.png)
+Lo primero que revisé fue que el archivo `.env` apuntara a la base de datos correcta y que las migraciones se hubieran ejecutado. Para comprobar las migraciones, volví a ejecutar:
 
-En esta etapa se trabaja con las dependencias necesarias para el funcionamiento de los recursos del frontend. El comando utilizado para instalar los paquetes definidos en `package.json` es:
+```bat
+php artisan migrate
+```
 
-```bash
+Si el error continúa, también hay que revisar si el proyecto tiene una migración para crear la tabla `sessions`. La solución depende de la versión y de la configuración que tenga Laravel, así que conviene revisar eso antes de crear o modificar tablas.
+
+Importante: no borres las tablas ni ejecutes comandos que eliminen datos sin comprobar primero qué hacen.
+
+### Paso 9. Volver a comprobar la página de Laravel
+
+![Paso 9: volver a comprobar Laravel](Imagenes/Img9.png)
+
+Después de revisar la configuración, volví al navegador y actualicé la página para comprobar si el error había desaparecido. Si todavía aparece, hay que leer el mensaje y seguir revisando la causa; no basta con actualizar la página si el problema sigue ahí.
+
+### Paso 10. Instalar los paquetes de frontend
+
+![Paso 10: instalar dependencias de frontend](Imagenes/Img10.png)
+
+Luego, desde la terminal y dentro de `Lab_Laravel`, ejecuté:
+
+```bat
 npm install
 ```
 
-### Imagen 11. Ejecución de las migraciones
+Este comando instala los paquetes de frontend que están definidos en `package.json`. Esperé a que terminara y revisé el resultado que apareció en la terminal.
 
-![Imagen 11](Imagenes/Img11.png)
+### Paso 11. Comprobar las migraciones aplicadas
 
-En esta evidencia se muestra el resultado de las operaciones relacionadas con las migraciones de Laravel. Las migraciones permiten definir y mantener la estructura de la base de datos mediante archivos PHP. Laravel registra las migraciones ejecutadas en la tabla `migrations`.
+![Paso 11: comprobar las migraciones](Imagenes/Img11.png)
 
-### Imagen 12. Revisión de la base de datos
+Después revisé el resultado de las migraciones en la terminal. Entre los mensajes que pueden aparecer están `Preparing database`, `Creating migration table` y `Running migrations`, seguidos de los nombres de las tablas. Eso indica que Laravel está preparando la base de datos y ejecutando las migraciones que faltan.
 
-![Imagen 12](Imagenes/Img12.png)
+### Paso 12. Revisar la estructura de la base de datos
 
-En esta captura se observa la revisión de la base de datos y de los elementos generados durante el proceso. Esta comprobación forma parte de la verificación de la estructura necesaria para el funcionamiento de la aplicación.
+![Paso 12: revisar tablas de la base de datos](Imagenes/Img12.png)
 
-### Imagen 13. Continuación de las comprobaciones del proyecto
+Después abrí phpMyAdmin, seleccioné la base de datos que tenía configurada en `.env` y revisé que aparecieran las tablas creadas por las migraciones, como `users`, `cache` y `jobs`, dependiendo de las migraciones del proyecto. Así pude comprobar también desde MySQL que las tablas estuvieran creadas.
 
-![Imagen 13](Imagenes/Img13.png)
+### Paso 13. Ejecutar el entorno de desarrollo
 
-En esta etapa se continúa trabajando con la configuración y ejecución del proyecto. Se revisan los elementos necesarios para que Laravel pueda funcionar antes de continuar con la preparación de las vistas de autenticación.
+![Paso 13: ejecutar el entorno de desarrollo](Imagenes/Img13.png)
 
-### Imagen 14. Instalación del paquete Laravel UI
+Más adelante, comprobé que seguía dentro de la carpeta del proyecto y ejecuté este comando para iniciar el entorno de desarrollo:
 
-![Imagen 14](Imagenes/Img14.png)
+```bat
+composer run dev
+```
 
-En esta evidencia se trabaja con la instalación del paquete `laravel/ui`, utilizado en la guía para generar estructuras de interfaz y recursos de autenticación en las versiones compatibles de Laravel.
+En mi caso, el comando podía iniciar varios procesos, como el servidor de Laravel y Vite. Revisé la terminal para comprobar que se estuvieran ejecutando. Si no te reconoce `composer run dev`, puedes iniciar los procesos por separado con los comandos que tenga tu proyecto.
 
-```bash
+### Paso 14. Instalar Laravel UI
+
+![Paso 14: instalar Laravel UI](Imagenes/Img14.png)
+
+Después instalé Laravel UI. Para eso, desde la terminal dentro de `Lab_Laravel`, escribí:
+
+```bat
 composer require laravel/ui
 ```
 
-Composer descarga e incorpora el paquete al proyecto y actualiza los archivos de dependencias correspondientes.
+Con este comando agregué el paquete `laravel/ui`, que utilicé para generar los recursos de interfaz y las vistas de autenticación con Bootstrap. Si Composer muestra algún conflicto, revisa las versiones instaladas de Laravel y del paquete.
 
-### Imagen 15. Configuración de Bootstrap y autenticación
+### Paso 15. Generar Bootstrap y las vistas de autenticación
 
-![Imagen 15](Imagenes/Img15.png)
+![Paso 15: generar Bootstrap y autenticación](Imagenes/Img15.png)
 
-En esta etapa se generan los recursos del frontend utilizando Bootstrap mediante Laravel UI.
+Cuando terminó la instalación, ejecuté el comando para generar el scaffolding de Bootstrap:
 
-```bash
+```bat
 php artisan ui bootstrap
+```
+
+Con esto se generó la estructura inicial de frontend para Bootstrap. Después escribí el siguiente comando para generar también las vistas de autenticación:
+
+```bat
 php artisan ui bootstrap --auth
 ```
 
-El primer comando genera los recursos necesarios para utilizar Bootstrap. El segundo solicita la generación de vistas de autenticación, como inicio de sesión y registro, en las versiones compatibles con el paquete.
+La opción `--auth` agrega las vistas de inicio de sesión, registro y otras pantallas de autenticación. En mi terminal apareció una pregunta sobre un archivo que ya existía; si te pasa lo mismo, lee bien el mensaje antes de elegir si quieres sobrescribirlo.
 
-### Imagen 16. Instalación y ejecución de recursos del frontend
+### Paso 16. Instalar y compilar los recursos de Bootstrap
 
-![Imagen 16](Imagenes/Img16.png)
+![Paso 16: instalar y compilar recursos](Imagenes/Img16.png)
 
-En esta captura se documenta el trabajo con las dependencias del frontend. Los comandos indicados en la guía son:
+Después de generar los archivos de Bootstrap, volví a instalar las dependencias con:
 
-```bash
+```bat
 npm install
+```
+
+Luego ejecuté el comando para compilar los recursos del frontend:
+
+```bat
 npm run dev
 ```
 
-Estos comandos permiten instalar las dependencias y ejecutar las herramientas de desarrollo del frontend.
+Este proceso compila los archivos CSS y JavaScript del proyecto. Dejé la terminal abierta mientras trabajaba con Vite. Si te aparece un error con `npm`, revisa que Node.js y npm estén instalados correctamente.
 
-### Imagen 17. Comprobación de la interfaz de autenticación
+### Paso 17. Comprobar las vistas de autenticación
 
-![Imagen 17](Imagenes/Img17.png)
+![Paso 17: comprobar las vistas de autenticación](Imagenes/Img17.png)
 
-En esta evidencia se muestra la interfaz relacionada con el sistema de autenticación. Estas vistas permiten disponer de formularios para iniciar sesión o registrarse, según los recursos generados durante la práctica.
+Con los recursos generados, volví a abrir la aplicación en el navegador para revisar si aparecían las opciones o formularios de autenticación. Si no aparecen, revisa que hayas ejecutado `php artisan ui bootstrap --auth`, que `npm install` haya terminado y que el servidor siga activo. El resultado también puede depender de la versión de Laravel que tengas.
 
-### Imagen 18. Comprobación final de la aplicación
+### Paso 18. Comprobación final del proyecto
 
-![Imagen 18](Imagenes/Img18.png)
+![Paso 18: comprobar el proyecto](Imagenes/Img18.png)
 
-En la última captura se muestra la aplicación Laravel en el navegador como parte de las comprobaciones finales del laboratorio. Esta evidencia cierra el recorrido documentado del trabajo realizado.
+Y para terminar, volví al navegador y actualicé la aplicación para revisar cómo había quedado. Comprobé que el servidor siguiera activo, que los recursos del frontend se hubieran compilado y que las páginas generadas se pudieran visualizar. Con esto terminé el recorrido: creé el proyecto, preparé la base de datos, ejecuté las migraciones e incorporé las vistas de autenticación con Bootstrap.
 
 ## Comandos principales utilizados
 
@@ -332,4 +440,4 @@ Las capturas conservan evidencia del desarrollo de la práctica, incluyendo las 
 
 ---
 
-<p align="center">Documentación del laboratorio realizada por <strong>Vasdti Legaspi</strong>.</p>
+<p align="center">Laboratorio realizado por <strong>Vasdti Legaspi</strong> · 23 de octubre de 2026.</p>
